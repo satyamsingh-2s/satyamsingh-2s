@@ -2,16 +2,24 @@
 
 <img src="./generated/dark_mode.svg" alt="GitHub Profile Card">
 
-## V1
+## How it works
 
-This profile card is generated from the SVG template in `src/template.svg` using values from `src/data.json`.
+This profile card is generated automatically from live GitHub profile and repository data.
 
-To regenerate locally:
+The workflow is:
 
-```bash
-npm run generate
+```
+GitHub API
+   ↓
+src/fetch-github.mjs
+   ↓
+src/data.json
+   ↓
+src/generate.mjs
+   ↓
+generated/dark_mode.svg
 ```
 
-GitHub Actions runs the same generator on pushes to `main`.
+GitHub Actions updates the card automatically on pushes to `main` and on a daily schedule.
 
-> V1 intentionally uses static data. Live GitHub API data is planned for V2.
+The SVG design lives in `src/template.svg`, while the generated card is stored in `generated/dark_mode.svg`.
