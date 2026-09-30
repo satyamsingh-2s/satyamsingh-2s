@@ -4,6 +4,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *"
 
 permissions:
   contents: write
@@ -18,12 +20,17 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
+      - name: Fetch live GitHub data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_USERNAME: satyamsingh-2s
+        run: npm run fetch-data
       - name: Generate SVG
         run: npm run generate
-      - name: Commit generated SVG
+      - name: Commit generated files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add generated/dark_mode.svg
-          git diff --cached --quiet || git commit -m "Update generated profile card"
+          git add src/data.json generated/dark_mode.svg
+          git diff --cached --quiet || git commit -m "Update live profile card data"
           git push
