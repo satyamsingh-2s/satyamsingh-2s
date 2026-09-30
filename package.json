@@ -1,9 +1,11 @@
 {
   "name": "github-profile-card",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "generate": "node src/generate.mjs"
+    "fetch-data": "node src/fetch-github.mjs",
+    "generate": "node src/generate.mjs",
+    "build": "npm run fetch-data && npm run generate"
   }
 }
